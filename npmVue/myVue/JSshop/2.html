@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <ol>
+        <zujian v-for="temp of arr" :todo="temp" :key="temp.id"></zujian>
+    </ol>
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    Vue.component('zujian', {
+        props: ['todo'],
+        template: '<li>{{todo.name}}</li>'
+    });
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            arr: [
+                {id: 1, name: 'nihao'},
+                {id: 2, name: 'hh'},
+                {id: 3, name: 'werwe'}
+            ]
+        }
+    });
+</script>
+</body>
+</html>

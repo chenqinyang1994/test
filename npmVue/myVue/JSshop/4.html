@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app" style="margin-left: 2000px;">
+    <div @click="parent">parent
+        <div @click.self="child">child
+            <div @click="grandson">grandson</div>
+        </div>
+    </div>
+    <a href="https://www.cmcm.com/" @click.prevent="parent">猎豹</a>
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            parent() {
+                alert('parent')
+            },
+            child() {
+                alert('child')
+            },
+            grandson() {
+                alert('grandson')
+            }
+        }
+    })
+</script>
+</body>
+</html>

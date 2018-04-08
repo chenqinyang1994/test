@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../node_modules/animate.css/animate.css">
+    <style>
+        div > div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="flag">
+    <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+        <div v-for="(a,index) of myArr" :key="Math.random()">{{a}}</div>
+    </transition-group>
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            flag: '',
+            arr: [1, 2, 3, 4, 5]
+        },
+        computed: {
+            myArr() {
+                return this.arr.filter(item => item == this.flag);
+            }
+        }
+    })
+</script>
+</body>
+</html>

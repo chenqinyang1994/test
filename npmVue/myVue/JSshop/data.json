@@ -1,0 +1,23 @@
+[
+  {
+    "isSeleted": true,
+    "imgLink": "//img10.360buyimg.com/cms/s80x80_jfs/t7561/9/3773898071/254774/132e805c/59f96e52N9dc7fc3b.jpg",
+    "productName": "JBL T280A 立体声入耳式耳机",
+    "price": 149.00,
+    "number": 1
+  },
+  {
+    "isSeleted": false,
+    "imgLink": "//img10.360buyimg.com/cms/s80x80_jfs/t8107/37/1359438185/72159/a6129e26/59b857f8N977f476c.jpg",
+    "productName": "Apple iPhone 8 Plus",
+    "price": 6688.55,
+    "number": 1
+  },
+  {
+    "isSeleted": true,
+    "imgLink": "//img10.360buyimg.com/cms/s80x80_jfs/t15592/355/2187676718/118524/3d2f750e/5a951852N56f34993.jpg",
+    "productName": "美的（Midea）正1.5匹",
+    "price": 2349.88,
+    "number": 1
+  }
+]

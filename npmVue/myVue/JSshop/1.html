@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hello,Vue</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+<div id="app" style="margin-top: 150px;">
+    <div class="container">
+        <div class="row">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>全选<input type="checkbox" v-model="checkVal"/></th>
+                    <th>商品</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>小计</th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="pro of myValue">
+                    <td><input type="checkbox" v-model="pro.isSeleted"/></td>
+                    <td><img :src="pro.imgLink" :title="pro.productName">{{pro.productName}}</td>
+                    <td>{{pro.price|fixed(2)}}</td>
+                    <td><input type="number" v-model.number="pro.number" min="1"/></td>
+                    <td>{{pro.price*pro.number|fixed(2)}}</td>
+                    <td>
+                        <button class="btn btn-danger" @click="remove(pro)">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">总价格：{{sum|fixed(2)}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="../../node_modules/axios/dist/axios.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            myValue: []
+        },
+        created() {
+            this.getData();
+        },
+        methods: {
+            getData() {
+                axios.get('./data.json').then(response => {
+                    this.myValue = response.data;
+                    this.childChange();
+                }).catch(error =>
+                    console.log(error)
+                );
+            },
+            remove(curPro) {
+                if (confirm('您是否要删除此项？'))
+                    this.myValue = this.myValue.filter(item => item !== curPro);
+            },
+            childChange() {
+                this.checkVal = this.myValue.every(item => item.isSeleted);
+            }
+
+        },
+        filters: {
+            fixed(val, num) {
+                if (val) {
+                    return val.toFixed(num);
+                }
+            }
+        },
+        computed: {
+            checkVal: {
+                get() {
+                    console.log(this.myValue);
+                    return this.myValue.every(item => item.isSeleted);
+                },
+                set(val) {
+                    this.myValue.forEach(item => item.isSeleted = val);
+                }
+            },
+            sum() {
+                return this.myValue.reduce((prev, next) => {
+                    if (!next.isSeleted) {
+                        return prev;
+                    }
+                    return prev + next.price * next.number;
+                }, 0)
+            }
+        }
+    });
+</script>
+</body>
+
+</html>
