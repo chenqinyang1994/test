@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>element</title>
+    <link rel="stylesheet" href="../../node_modules/element-ui/lib/theme-chalk/index.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-radio v-model='radio' label='1'>备选</el-radio>
+        <el-radio v-model='radio' label='2'>备选</el-radio>
+    </div>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script src="../../node_modules/element-ui/lib/index.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    radio: '1'
+                };
+            }
+        })
+    </script>
+</body>
+
+</html>

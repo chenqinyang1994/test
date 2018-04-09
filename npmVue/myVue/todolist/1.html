@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todolist</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../node_modules/normalize.css/normalize.css">
+    <style>
+        .del {
+            text-decoration: line-through;
+            color: #cccccc;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <nav class="navbar navbar-default" style="width: 100%;">
+        <div class="container-fluid" style="width: 100%;">
+            <div class="navbar-header" style="width: 100%;">
+                <h3>亲，你还有{{num}}个任务没有完成~</h3>
+                <input type="text" class="form-control" v-model="topInput" @keyup.13="add">
+            </div>
+        </div>
+    </nav>
+    <ul class="list-group clearfix" style="width: 100%; padding: 0 31px;">
+        <li class="list-group-item" v-for="todo of todos" @dblclick="change">
+            <template v-if="flag">
+                <input type="checkbox" v-model="todo.isSeleted"><span :class="{del:todo.isSeleted}">{{todo.con}}</span>
+            </template>
+            <template v-if="!flag">
+                <input type="text" v-model="todo.con">
+            </template>
+            <button class="btn btn-danger" @click="del(todo)" style="float: right;">删除</button>
+        </li>
+    </ul>
+</div>
+<script src="../../node_modules/axios/dist/axios.js"></script>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            flag: true,
+            topInput: '',
+            todos: [
+                {isSeleted: false, con: '睡觉'},
+                {isSeleted: false, con: '看书'}
+            ]
+        },
+        methods: {
+            add() {
+                this.todos.push({isSeleted: false, con: this.topInput});
+                this.topInput = '';
+            },
+            del(todo) {
+                if (todo.isSeleted) {
+                    this.todos = this.todos.filter(item => item != todo);
+                }
+            },
+            change() {
+                this.flag = !this.flag;
+            }
+        },
+        computed: {
+            num() {
+                return this.todos.filter(item => !item.isSeleted).length;
+            }
+        }
+    });
+</script>
+</body>
+
+</html>
