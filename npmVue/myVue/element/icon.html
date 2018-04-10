@@ -27,13 +27,11 @@
         const cityOptions = ['北京', '上海', '广州', '深圳'];
         let vm = new Vue({
             el: '#app',
-            data() {
-                return {
-                    checkVal: false,
-                    checkedCities: ['广州', '上海'],
-                    cities: cityOptions,
-                    isIndeterminate: true
-                };
+            data: {
+                checkVal: false,
+                checkedCities: ['广州', '上海', '北京'],
+                cities: cityOptions,
+                isIndeterminate: true
             },
             methods: {
                 handleCheckAllChange(val) {

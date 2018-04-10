@@ -1,0 +1,29 @@
+1、vue会循环data中的数据（数据劫持），依次的增加getter和setter
+2、使用变量时，先要初始化，否则新加的属性不会导致页面刷新
+3、vm.$set(vm.a,"school",1); 此方法可以给对象添加响应式的数据变化
+4、去改变数组中的某一项是监控不到的，也不能使用改变数组长度的方法，错误：vm.arr[0] = 100;
+vm.arr.length -= 2; 变异方法：pop、push、shift、unshift、sort、reverse、splice等可以改变原数组的
+5、v-for：要循环谁就在谁的身上增加v-for属性
+6、methods和data中的数据会全部放到vm上，而且名字不能相同，相同会报错，methods中的this指向的是vm实例（一般我们管vm叫根实例）
+7、v-on:click="fn" 如果不传递参数，则不用给fn写括号会自动传入事件源event，如果写括号，括号内代表形参，如果也想获取事件源需要手动传入$event参数
+8、checkbox：如果是复选框，只有一个复选框的时候，会把data中的值转化为boolean类型，如果true则代表选中
+如果是多个checkbox，要在input中增加value属性并且data中的值的数据类型是数组
+9、created：专门用来发送ajax的方法，再数据初始化后会调用，this指向也是vm的实例，钩子函数
+10、filters  过滤器  过滤器里面的小方法里面的this是Window   在DOM里面用管道符|把数据和方法隔开   过滤器不改变原数据，只改变显示效果
+11、钩子函数：
+beforeCreate：此方法用不到
+created：获取ajax，初始化操作
+beforeMount：没有什么实际意义
+mounted：真实DOM渲染完了，在此函数中可以操作DOM；一般在这里面操作DOM都是写在this.$nextTick(()=>{})里面，保证DOM渲染完毕不出错
+beforeUpdate：虚拟DOM更新之前。一般用watch来替换掉
+updated：虚拟DOM更新后。一般用watch来替换掉
+beforeDestroy：销毁前，可以清除定时器，或者清除事件绑定
+destroyed：销毁后
+12、vm.$：
+vm.$watch       监控
+vm.$el          当前el元素 
+vm.$set         后加的属性实现响应式变化
+vm.$options     vm上的所有属性
+vm.$nextTick(()=>{异步方法，等待渲染DOM完成后可以获取vm});     如果数据变化后想获取真实DOM中的内容，需要等待页面渲染完成后再去获取，所有的DOM操作最好在nextTick中  
+vm.$refs        相当于原生获取元素的方法一样document.getElementById() 如果DOM元素不是通过v-for循环出来的，只能获取到一个，通过v-for循环出来的可以都获取到。
+13、
