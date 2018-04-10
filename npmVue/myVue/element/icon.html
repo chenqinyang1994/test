@@ -13,18 +13,38 @@
 
 <body>
     <div id="app">
-        <el-radio v-model='radio' label='1'>备选</el-radio>
-        <el-radio v-model='radio' label='2'>备选</el-radio>
+        <template>
+            <el-checkbox :isIndeterminate='isIndeterminate' v-model='checkVal' @change='handleCheckAllChange'>全选</el-checkbox>
+            <div style="margin: 15px 0;"></div>
+            <el-checkbox-group v-model='checkedCities' @change='handleCheckedCitiesChange' :min="1" :max="2">
+                <el-checkbox v-for='city in cities' :label='city' :key='city'>{{city}}</el-checkbox>
+            </el-checkbox-group>
+        </template>
     </div>
     <script src="../../node_modules/vue/dist/vue.js"></script>
     <script src="../../node_modules/element-ui/lib/index.js"></script>
     <script>
+        const cityOptions = ['北京', '上海', '广州', '深圳'];
         let vm = new Vue({
             el: '#app',
             data() {
                 return {
-                    radio: '1'
+                    checkVal: false,
+                    checkedCities: ['广州', '上海'],
+                    cities: cityOptions,
+                    isIndeterminate: true
                 };
+            },
+            methods: {
+                handleCheckAllChange(val) {
+                    this.checkedCities = val ? cityOptions : [];
+                    this.isIndeterminate = false;
+                },
+                handleCheckedCitiesChange(value) {
+                    let checkedCount = value.length;
+                    this.checkVal = checkedCount = this.cities.length;
+                    this.isIndeterminate = checkedCount > 0 && checkedCount < this.length;
+                }
             }
         })
     </script>
