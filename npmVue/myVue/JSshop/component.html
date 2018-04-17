@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-cloak>{{b}}</div>
+        <kkk @fnaaa='fn'></kkk>
+        <kkk @fnaaa='fn'></kkk>
+    </div>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('kkk', {
+            template: '<button @click="fnClick">{{a}}</button>',
+            data() {
+                return { a: 0 }
+            },
+            methods: {
+                fnClick() {
+                    this.a++;
+                    this.$emit('fnaaa')
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                b: 0
+            },
+            methods: {
+                fn() {
+                    this.b++
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

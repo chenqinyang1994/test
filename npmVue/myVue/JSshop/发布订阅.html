@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+        vm.$on('go', function (msg) {
+            console.log(msg);
+        })
+        vm.$on('go', function (msg) {
+            console.log(msg + 'cofe')
+        })
+        vm.$on('go', function (msg, a) {
+            console.log(msg + a);
+        })
+        vm.$emit('go', 'cmcm', 'baidu')
+        // {'女孩':[eat,shop,go]}
+        // function Girl() {
+        //     this.obj = {};
+        // }
+        // Girl.prototype.on = function (eventName, callback) {
+        //     if (this.obj[eventName]) {
+        //         this.obj[eventName].push(callback)
+        //     } else {
+        //         this.obj[eventName] = [callback]
+        //     }
+        // }
+        // Girl.prototype.emit = function (eventName, ...args) {
+        //     this.obj[eventName].forEach(item => {
+        //         item(...args)
+        //     });
+        // }
+        // let eg = new Girl();
+        // eg.on('cqy', function (a, b) {
+        //     console.log(a + b + 'cqy');
+        // })
+        // eg.on('cqy', function (a, b) {
+        //     console.log(a + b + 'pbj');
+        // })
+        // eg.on('cqy', function (a, b) {
+        //     console.log(a + b + 'hhh');
+        // })
+        // eg.emit('cqy', 'hi', 'hhh');
+    </script>
+</body>
+
+</html>
