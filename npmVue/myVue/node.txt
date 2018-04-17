@@ -14,7 +14,7 @@ vm.arr.length -= 2; 变异方法：pop、push、shift、unshift、sort、reverse
 beforeCreate：此方法用不到
 created：获取ajax，初始化操作
 beforeMount：没有什么实际意义
-mounted：真实DOM渲染完了，在此函数中可以操作DOM；一般在这里面操作DOM都是写在this.$nextTick(()=>{})里面，保证DOM渲染完毕不出错
+mounted：真实DOM渲染完了，在此函数中可以操作DOM；一般在这里面操作DOM都是写在this.$nextTick(()=>{})里面，保证DOM渲染完毕不出错（因为此处渲染DOM是异步操作）
 beforeUpdate：虚拟DOM更新之前。一般用watch来替换掉
 updated：虚拟DOM更新后。一般用watch来替换掉
 beforeDestroy：销毁前，可以清除定时器，或者清除事件绑定
@@ -27,7 +27,7 @@ vm.$options     vm上的所有属性
 vm.$nextTick(()=>{异步方法，等待渲染DOM完成后可以获取vm});     如果数据变化后想获取真实DOM中的内容，需要等待页面渲染完成后再去获取，所有的DOM操作最好在nextTick中  
 vm.$refs        相当于原生获取元素的方法一样document.getElementById() 如果DOM元素不是通过v-for循环出来的，只能获取到一个，通过v-for循环出来的可以都获取到。
 13、全局组件：
-组件名不要带有大写，多个单词中间用-
+组件名不要带有大写，多个单词中间用- 
 组件名和定义名字需相同（首字母可以大写）
 html采用的短横线分隔式命名法，js中转成驼峰也是可以的
 组件中的数据必须是函数类型（data），返回一个实例作为组件的数据
@@ -39,3 +39,4 @@ html采用的短横线分隔式命名法，js中转成驼峰也是可以的
 组件是相互独立的，不能直接跨作用域，vm这个实例也是一个组件，组件中拥有生命周期函数
 子组件不能直接使用父组件的数据（组件之间的数据交互）
 组件理论上可以无限嵌套
+...   在参数中是剩余运算符，在别的里是展开运算符
