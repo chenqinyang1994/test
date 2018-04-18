@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Nested Named Views</h1>
+        <router-view></router-view>
+    </div>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script src="../../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        const redi = {
+            template: '<div>redi</div>'
+        }
+        const setting = {
+            template: `
+            <div>
+                <router-link to='/settings/emails'>emails</router-link>
+                <router-link to='/settings/profile'>profile</router-link>
+            </div>
+            `
+        }
+        const userset = {
+            template: `
+            <div>
+                <setting></setting>
+                <router-view></router-view>
+                <router-view name='bbb'></router-view>
+            </div>
+            `,
+            components: { setting }
+        }
+        const emailsub = {
+            template: '<div>Email Subscriptions</div>'
+        }
+        const preview = {
+            template: '<div>Edit your profile<br/>Preview of your profile</div>'
+        }
+        const router = new VueRouter({
+            routes: [{
+                path: '/settings',
+                redirect: '/redirect',
+                component: userset,
+                children: [{
+                    path: 'emails',
+                    component: emailsub
+                }, {
+                    path: 'profile',
+                    components: {
+                        default: preview,
+                        bbb: emailsub
+                    }
+                }]
+            }, {
+                path: '/redirect',
+                component: redi
+            }]
+        })
+        router.push('/settings/emails')
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+
+</html>

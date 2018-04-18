@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Router</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>hello Router</h1>
+        <p>
+            <router-link :to='{name: "foo",params:{id:123}}'>go to foo</router-link>
+            <router-link to='/bar'>go to bar</router-link>
+        </p>
+        <router-view></router-view>
+        <button @click='fn'>点我</button>
+    </div>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script src="../../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        const Foo = {
+            template: '<div>foo<router-view></router-view></div>'
+        };
+        const Bar = { template: '<div>bar</div>' };
+        const User = {
+            template: '<div>User</div>'
+        }
+        const routes = [
+            {
+                path: '/foo/:id',
+                component: Foo,
+                name: 'foo',
+                children: [
+                    {
+                        path: 'user',
+                        component: User
+                    },
+                    {
+                        path: 'bar',
+                        component: Bar
+                    }
+                ]
+            }
+        ];
+        const router = new VueRouter({
+            routes
+        });
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            router,
+            methods: {
+                fn() {
+                    console.log(this.$route)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
