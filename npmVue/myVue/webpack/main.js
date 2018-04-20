@@ -1,4 +1,5 @@
-console.log("main");
-import { a, b } from './a';
+import {a} from './a.js';
+import {cqy} from './b.js';
+
 console.log(a);
-console.log(b);
+console.log(cqy);

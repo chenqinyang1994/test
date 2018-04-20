@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/user'>6666</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script src="../../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        const User = {
+            props: ['id'],
+            template: '<div>User{{id}}</div>'
+        }
+        const router = new VueRouter({
+            mode: 'history',
+            routes: [
+                {
+                    path: '/user/:id',
+                    component: User,
+                    props: true
+                }
+            ]
+        })
+        let vm = new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+
+</html>
