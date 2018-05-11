@@ -3,7 +3,7 @@ let fs = require('fs')
 let url = require('url')
 
 let slides = require('./data')
-//测试
+
 //读取数据的方法
 let readFn = (cb) => {
     fs.readFile(__dirname + '\\book.json', 'utf-8', (err, data) => {
