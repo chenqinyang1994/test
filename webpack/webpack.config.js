@@ -5,5 +5,14 @@ module.exports = {
     output: {
         filename: 'bundle.js',//打包后的名字
         path: path.resolve('./dist')//必须是一个绝对路径
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: [path.resolve(__dirname, 'node_modules')],
+                use: 'babel-loader'
+            }
+        ]
     }
 };
