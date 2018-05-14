@@ -1,7 +1,10 @@
 <template>
   <div>
-      <router-view></router-view>
-      <Tab></Tab>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <Tab></Tab>
   </div>
 </template>
 <script>

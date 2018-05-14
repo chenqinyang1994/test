@@ -10,7 +10,10 @@ export default new VueRouter({
     routes: [
         {
             path: '/home',
-            component: Home
+            component: Home,
+            meta: {
+                keepAlive: true
+            }
         },
         {
             path: '/add',

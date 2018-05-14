@@ -1,21 +1,21 @@
 <template>
   <div>
-      <Home>首页</Home>
-      <div class="content">
-        <Loading v-if="loading"></Loading>
-        <template v-else>
-          <Swiper :slidesdata='slidesdata'></Swiper>
-          <div class="hotbook">
-            <h3>热门图书</h3>
-            <ul>
-              <li v-for="(book,index) in books" :key="index">
-                <img :src="book.bookCover" alt="">
-                <p>{{book.bookName}}{{book.bookId}}</p>
-              </li>
-            </ul>
-          </div>
-        </template>
-      </div>
+    <Home>首页</Home>
+    <div class="content">
+      <Loading v-if="loading"></Loading>
+      <template v-else>
+        <Swiper :slidesdata='slidesdata'></Swiper>
+        <div class="hotbook">
+          <h3>热门图书</h3>
+          <ul>
+            <li v-for="(book,index) in books" :key="index">
+              <img :src="book.bookCover" alt="">
+              <p>{{book.bookName}}{{book.bookId}}</p>
+            </li>
+          </ul>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 <script>
