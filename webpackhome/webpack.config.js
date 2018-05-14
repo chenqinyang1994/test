@@ -3,7 +3,7 @@ let HtmlWabpackPlugin = require('html-webpack-plugin');
 let { VueLoaderPlugin } = require('vue-loader');
 module.exports = {
     mode: 'development',
-    entry: './src/main.js',
+    entry: ['babel-polyfill', './src/main.js'],
     output: {
         filename: 'bundle.js',
         path: path.resolve('./dist')

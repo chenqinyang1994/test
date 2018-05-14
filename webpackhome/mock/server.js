@@ -27,7 +27,7 @@ http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     res.setHeader("X-Powered-By", ' 3.2.1')
-    if (req.method == "OPTIONS")  return res.end();/*让options请求快速返回*/ 
+    if (req.method == "OPTIONS") return res.end();/*让options请求快速返回*/
 
     let { pathname, query } = url.parse(req.url, true)
     if (pathname === '/slides') {
@@ -45,7 +45,15 @@ http.createServer((req, res) => {
         let id = parseInt(query.id);
         switch (req.method) {
             case 'GET':
-                if (id) {
+                if (!isNaN(id)) {//查询一个
+                    readFn((books) => {
+                        let book = books.find(item => item.bookId == id);
+                        if (!book) {
+                            book = {};//如果没找到，则是undefined
+                        }
+                        res.setHeader('Content-type', 'application/json,charset=utf8')
+                        res.end(JSON.stringify(book));
+                    })
                 } else {
                     readFn((books) => {
                         let hot = books.reverse()
@@ -55,8 +63,42 @@ http.createServer((req, res) => {
                 }
                 break;
             case 'POST':
+                let str = '';
+                req.on('data', chunk => {
+                    str += chunk;
+                });
+                req.on('end', () => {
+                    let book = JSON.parse(str);//book就是要改成什么样子
+                    readFn(books => {
+                        book.bookId = books.length ? books[books.length - 1].bookId + 1 : 1;//添加id
+                        books.push(book);//將數據放到books中
+                        writeFn(books, () => {
+                            res.end(JSON.stringify(book))
+                        })
+                    })
+                });
                 break;
             case 'PUT':
+                if (id) {//获取了当前要修改的id
+                    let str = '';
+                    req.on('data', chunk => {
+                        str += chunk;
+                    });
+                    req.on('end', () => {
+                        let book = JSON.parse(str);//book就是要改成什么样子
+                        readFn(books => {
+                            books = books.map(item => {
+                                if (item.bookId == id) {//找到id相同的那一本书
+                                    return book
+                                }
+                                return item //其他书正常返回
+                            });
+                            writeFn(books, () => {//将数据写回json中
+                                res.end(JSON.stringify(book));
+                            })
+                        })
+                    })
+                }
                 break;
             case 'DELETE':
                 if (id) {
