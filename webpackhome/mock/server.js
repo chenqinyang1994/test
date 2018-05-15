@@ -22,6 +22,8 @@ let writeFn = (data, cb) => {
 
 // writeFn({}, () => { })
 
+let pageSize = 5;//每页显示五个
+
 http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
@@ -30,6 +32,20 @@ http.createServer((req, res) => {
     if (req.method == "OPTIONS") return res.end();/*让options请求快速返回*/
 
     let { pathname, query } = url.parse(req.url, true)
+
+    if (pathname === '/page') {
+        let offset = parseInt(query.offset) || 0; //拿到当前前端传递的值
+        readFn(books => {
+            let result = books.reverse().slice(offset, offset + pageSize);//数据倒叙
+            let hasMore = true;
+            if (books.length <= offset + pageSize) {
+                hasMore = false;
+            }
+            res.setHeader('Content-type', 'application/json,charset=utf8');
+            res.end(JSON.stringify({ hasMore, books: result }));
+        })
+    }
+
     if (pathname === '/slides') {
         res.setHeader('Content-type', 'application/json,charset=utf8')
         res.end(JSON.stringify(slides))

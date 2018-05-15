@@ -1,36 +1,56 @@
 <template>
   <div>
-      <MHeader>列表页</MHeader>
-      <div class="content">
-        <ul>
-          <router-link v-for="(book,index) in allBooks" :key="index" :to="{name:'detail',params:{bid:book.bookId}}" tag='li'>
-            <img :src="book.bookCover" alt="">
-            <div>
-              <h4>{{book.bookName}}</h4>
-              <p>{{book.bookInfo}}</p>
-              <b>{{book.bookPrice}}</b>
-              <p>{{book.bookId}}</p>
-            </div>
-            <button @click.stop="remove(book.bookId)">删除</button>
-          </router-link>
-        </ul>
-      </div>
+    <MHeader>列表页</MHeader>
+    <div class="content" ref="scroll" @scroll="conScroll">
+      <ul>
+        <router-link v-for="(book,index) in allBooks" :key="index" :to="{name:'detail',params:{bid:book.bookId}}" tag='li'>
+          <img :src="book.bookCover" alt="">
+          <div>
+            <h4>{{book.bookName}}</h4>
+            <p>{{book.bookInfo}}</p>
+            <b>{{book.bookPrice}}</b>
+            <p>{{book.bookId}}</p>
+          </div>
+          <button @click.stop="remove(book.bookId)">删除</button>
+        </router-link>
+      </ul>
+      <div class="more" v-if="!hasMore">不要再滑了，到底了</div>
+    </div>
   </div>
 </template>
 <script>
 import MHeader from "../base/MHeader.vue";
-import { allBooks, removeBook } from "../api";
+import { pagination, removeBook } from "../api";
 export default {
   data() {
     return {
-      allBooks: []
+      allBooks: [],
+      hasMore: true,
+      offset: 0,
+      loading: false
     };
   },
   methods: {
-    getAllbooks() {
-      allBooks().then(res => {
-        this.allBooks = res;
-      });
+    conScroll() {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        let { scrollTop, clientHeight, scrollHeight } = this.$refs.scroll;
+        if (scrollTop + clientHeight + 20 >= scrollHeight) {
+          this.page();
+        }
+      }, 60);
+    },
+    page() {
+      if (this.hasMore && !this.loading) {
+        this.loading = true;
+        pagination(this.offset).then(res => {
+          let { hasMore, books } = res;
+          this.allBooks = [...this.allBooks, ...books];
+          this.hasMore = hasMore;
+          this.offset = this.allBooks.length;
+          this.loading = false;
+        });
+      }
     },
     remove(id) {
       removeBook(id).then(res => {
@@ -38,12 +58,29 @@ export default {
       });
     }
   },
+  mounted() {
+    let dom = this.$refs.scroll;
+    let dissss = 0,
+      start,
+      moveEv,
+      endEv;
+    dom.addEventListener("touchstart", e => {
+      start = e.touches[0].pageY;
+    });
+    dom.addEventListener("touchmove", e => {
+      dissss = e.touches[0].pageY - start;
+      if (dissss > 0 && dissss < 51) {
+        dom.style.top = dissss + 40 + "px";
+      }
+    });
+    dom.addEventListener("touchend", e => {});
+  },
   computed: {},
   components: {
     MHeader
   },
   created() {
-    this.getAllbooks();
+    this.page();
   }
 };
 </script>
@@ -85,6 +122,15 @@ export default {
         outline: none;
       }
     }
+  }
+  .more {
+    margin: 10px;
+    padding: 5px 0;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20px;
+    background-color: lightgreen;
   }
 }
 </style>

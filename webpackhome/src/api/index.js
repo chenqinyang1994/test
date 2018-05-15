@@ -45,3 +45,8 @@ export let addBook = (data) => {
 export let getAll = () => {
     return axios.all([slides(), getBooks()])
 }
+
+
+export let pagination = (offset) => {
+    return axios.get(`/page?offset=${offset}`);
+}

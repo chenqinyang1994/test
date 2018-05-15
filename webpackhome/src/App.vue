@@ -1,9 +1,13 @@
 <template>
   <div>
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <transition name="fadeIn">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
+    <transition name="fadeIn">
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
+    </transition>
     <Tab></Tab>
   </div>
 </template>
@@ -42,6 +46,16 @@ button {
   bottom: 50px;
   width: 100%;
   overflow: auto;
+}
+.fadeIn-enter {
+  opacity: 0;
+}
+.fadeIn-enter-active {
+  transition: all 0.3s linear;
+}
+.fadeIn-leave-active {
+  transition: all 0.3s linear;
+  opacity: 0;
 }
 </style>
 
