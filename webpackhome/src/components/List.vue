@@ -4,7 +4,7 @@
     <div class="content" ref="scroll" @scroll="conScroll">
       <ul>
         <router-link v-for="(book,index) in allBooks" :key="index" :to="{name:'detail',params:{bid:book.bookId}}" tag='li'>
-          <img :src="book.bookCover" alt="">
+          <img v-lazy="book.bookCover" alt="">
           <div>
             <h4>{{book.bookName}}</h4>
             <p>{{book.bookInfo}}</p>
@@ -59,21 +59,21 @@ export default {
     }
   },
   mounted() {
-    let dom = this.$refs.scroll;
-    let dissss = 0,
-      start,
-      moveEv,
-      endEv;
-    dom.addEventListener("touchstart", e => {
-      start = e.touches[0].pageY;
-    });
-    dom.addEventListener("touchmove", e => {
-      dissss = e.touches[0].pageY - start;
-      if (dissss > 0 && dissss < 51) {
-        dom.style.top = dissss + 40 + "px";
-      }
-    });
-    dom.addEventListener("touchend", e => {});
+    // let dom = this.$refs.scroll;
+    // let dissss = 0,
+    //   start,
+    //   moveEv,
+    //   endEv;
+    // dom.addEventListener("touchstart", e => {
+    //   start = e.touches[0].pageY;
+    // });
+    // dom.addEventListener("touchmove", e => {
+    //   dissss = e.touches[0].pageY - start;
+    //   if (dissss > 0 && dissss < 51) {
+    //     dom.style.top = dissss + 40 + "px";
+    //   }
+    // });
+    // dom.addEventListener("touchend", e => {});
   },
   computed: {},
   components: {
