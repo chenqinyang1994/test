@@ -130,4 +130,20 @@ http.createServer((req, res) => {
                 break;
         }
     }
+
+    //读取一个路径
+    // fs.stat('.' + pathname, function (err, stats) {
+    //     if (err) {
+    //         res.statusCode = 404;
+    //         res.end('NOT FOUND');
+    //     } else {
+    //         if (stats.isDirectory()) {
+    //             let p = require('path').join('.' + pathname, './index.html');
+    //             fs.createReadStream('.' + pathname).pipe(res)
+    //         } else {
+    //             fs.createReadStream('.' + pathname).pipe(res);
+    //         }
+    //     }
+    // })
+
 }).listen(3000);

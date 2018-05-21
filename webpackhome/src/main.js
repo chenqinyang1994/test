@@ -15,6 +15,12 @@ Vue.use(VueLazyload, {
     attempt: 1
 })
 
+//进入路由之前 ，诶一次都会执行此方法， 全局钩子
+router.beforeEach(function (to, from, next) {
+    document.title = to.meta.title;
+    next()
+})
+
 Vue.use(VueAwesomeSwiper)
 new Vue({
     //render是将虚拟的dom渲染成真实dom
