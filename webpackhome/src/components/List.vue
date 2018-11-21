@@ -35,6 +35,7 @@ export default {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         let { scrollTop, clientHeight, scrollHeight } = this.$refs.scroll;
+        console.dir(this.$refs.scroll)
         if (scrollTop + clientHeight + 20 >= scrollHeight) {
           this.page();
         }
