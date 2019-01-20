@@ -1,0 +1,6 @@
+@import './c.less';
+body {
+    background-color: lightgreen;
+    transform: rotate(45deg);
+    background-image: url(./wj.jpeg);
+}
